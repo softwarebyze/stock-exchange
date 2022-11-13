@@ -13,22 +13,20 @@
     />
   </head>
   <body>
+    <script defer src="./script.js"></script>
     <div class="container">
-      <div class="form">
-        <div class="input-group m-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder=""
-          />
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">
-              Search
-            </button>
-          </div>
+      <div class="input-group m-3">
+        <input type="text" class="form-control" placeholder="" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">
+            Search
+          </button>
         </div>
       </div>
-      <div class="results"></div>
+      <div class="results">
+        <ul class="list-group list-group-flush">
+        </ul>
+      </div>
     </div>
   </body>
 </html>
