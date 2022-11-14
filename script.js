@@ -1,6 +1,7 @@
 const searchInput = document.querySelector("input");
 const searchBtn = document.querySelector("button");
 const ul = document.querySelector("ul");
+const spinner = document.querySelector(".spinner-border");
 
 async function getData() {
   const searchQuery = searchInput.value;
@@ -18,14 +19,16 @@ function showData(data) {
   ul.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     let newLi = document.createElement("li");
-    newLi.classList.add('list-group-item');
-    newLi.innerText = `${data[i].name} (${data[i].symbol})`
+    newLi.classList.add("list-group-item");
+    newLi.innerText = `${data[i].name} (${data[i].symbol})`;
     ul.appendChild(newLi);
   }
 }
 
 async function getAndShow() {
+  spinner.classList.remove("d-none");
   const data = await getData();
+  spinner.classList.add("d-none");
   showData(data);
 }
 
