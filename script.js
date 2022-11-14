@@ -18,7 +18,8 @@ function showData(data) {
   ul.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
     let newLi = document.createElement("li");
-    newLi.innerHTML = `<li class="list-group-item">${data[i].name} (${data[i].symbol})</li>`;
+    newLi.classList.add('list-group-item');
+    newLi.innerText = `${data[i].name} (${data[i].symbol})`
     ul.appendChild(newLi);
   }
 }
