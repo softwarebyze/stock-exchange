@@ -21,7 +21,7 @@ function showData(data) {
     const a = document.createElement("a");
     a.classList.add("list-group-item", "list-group-item-action");
     a.innerText = `${data[i].name} (${data[i].symbol})`;
-    a.href = `/company.html?symbol=${data[i].symbol}`;
+    a.href = `./company.html?symbol=${data[i].symbol}`;
     resultListDiv.appendChild(a);
   }
 }
