@@ -1,0 +1,1 @@
+let symbol = new URLSearchParams(window.location.search).get('symbol');
