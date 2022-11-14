@@ -1,6 +1,6 @@
 const searchInput = document.querySelector("input");
 const searchBtn = document.querySelector("button");
-const ul = document.querySelector("ul");
+const resultListDiv = document.querySelector(".list-group");
 const spinner = document.querySelector(".spinner-border");
 
 async function getData() {
@@ -16,12 +16,13 @@ async function getData() {
 }
 
 function showData(data) {
-  ul.innerHTML = "";
+  resultListDiv.innerHTML = "";
   for (let i = 0; i < data.length; i++) {
-    let newLi = document.createElement("li");
-    newLi.classList.add("list-group-item");
-    newLi.innerText = `${data[i].name} (${data[i].symbol})`;
-    ul.appendChild(newLi);
+    const a = document.createElement("a");
+    a.classList.add("list-group-item", "list-group-item-action");
+    a.innerText = `${data[i].name} (${data[i].symbol})`;
+    a.href = `/company.html?symbol=${data[i].symbol}`;
+    resultListDiv.appendChild(a);
   }
 }
 
