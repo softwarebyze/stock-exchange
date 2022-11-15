@@ -34,3 +34,4 @@ async function getAndShow() {
 }
 
 searchBtn.addEventListener("click", getAndShow);
+searchInput.addEventListener('input', getAndShow);
