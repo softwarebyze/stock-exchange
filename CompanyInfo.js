@@ -1,13 +1,9 @@
-const img = document.querySelector("img");
-const companyName = document.querySelector("a");
-const stockPrice = document.querySelector(".price");
-const stockPercent = document.querySelector(".percent");
-const companyDescription = document.querySelector(".description");
-const sym = new URLSearchParams(window.location.search).get("symbol");
-const ctx = document.getElementById("myChart");
-const spinner = document.querySelector(".spinner-border");
-
 function showData(data) {
+  const img = document.querySelector("img");
+  const companyName = document.querySelector("a");
+  const stockPrice = document.querySelector(".price");
+  const stockPercent = document.querySelector(".percent");
+  const companyDescription = document.querySelector(".description");
   img.src = data.profile.image;
   companyName.innerText = data.profile.companyName;
   companyName.href = data.profile.website;
@@ -20,6 +16,7 @@ function showData(data) {
 }
 
 function makeChart(dates, closePrices) {
+  const ctx = document.getElementById("myChart");
   new Chart(ctx, {
     type: "line",
     data: {
@@ -45,6 +42,7 @@ function makeChart(dates, closePrices) {
 }
 
 async function getHistory(symbol) {
+  const spinner = document.querySelector(".spinner-border");
   const response = await fetch(
     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`
   );
@@ -56,7 +54,8 @@ async function getHistory(symbol) {
   spinner.classList.add("d-none");
 }
 
-async function getData(symbol) {
+async function getData() {
+  const symbol = new URLSearchParams(window.location.search).get("symbol");
   const response = await fetch(
     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
   );
@@ -65,17 +64,22 @@ async function getData(symbol) {
   getHistory(symbol);
 }
 
-getData(sym);
+getData();
 
 // class CompanyInfo {
 //   constructor(container, symbol) {
 //     this.container = container;
 //     this.symbol = symbol;
-//     container.appendChild()
+//     container.appendChild();
 //   }
 //   displayInfo() {
 //     return this.name + "is " + this.age + " years old!";
 //   }
+//   load() {}
+//   addChart() {}
 // }
-
-// let classmate = new ClassMates("Mike Will", 15);
+// (async function () {
+//   const params = new URLSearchParams(location.search);
+//   const symbol = params.get("symbol");
+//   const compInfo = new CompanyInfo(document.getElementById("compInfo"), symbol);
+// })();
