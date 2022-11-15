@@ -13,8 +13,8 @@ async function getTickerSearchData() {
   const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchQuery}&limit=10&exchange=NASDAQ`;
   try {
     const response = await fetch(url);
-    const data = await response.json();
-    return data;
+    const tickerSearchData = await response.json();
+    return tickerSearchData;
   } catch (err) {
     console.error(err);
   }
