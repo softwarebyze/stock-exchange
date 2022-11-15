@@ -66,3 +66,16 @@ async function getData(symbol) {
 }
 
 getData(sym);
+
+// class CompanyInfo {
+//   constructor(container, symbol) {
+//     this.container = container;
+//     this.symbol = symbol;
+//     container.appendChild()
+//   }
+//   displayInfo() {
+//     return this.name + "is " + this.age + " years old!";
+//   }
+// }
+
+// let classmate = new ClassMates("Mike Will", 15);
