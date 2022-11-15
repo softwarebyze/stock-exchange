@@ -21,16 +21,41 @@ async function getTickerSearchData() {
 }
 
 async function getCompanyData(symbol) {
-  
+  const response = await fetch(
+    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
+  );
+  const data = await response.json();
+  return data;
 }
 
-function showData(searchData) {
+async function showData(searchData) {
   resultListDiv.innerHTML = "";
   for (let i = 0; i < searchData.length; i++) {
     const a = document.createElement("a");
-    a.classList.add("list-group-item", "list-group-item-action");
-    a.innerText = `${searchData[i].name} (${searchData[i].symbol})`;
     a.href = `./company.html?symbol=${searchData[i].symbol}`;
+    a.classList.add("list-group-item", "list-group-item-action");
+
+    const companyData = await getCompanyData(searchData[i].symbol);
+
+    const logoImg = document.createElement("img");
+    logoImg.src = companyData.profile.image;
+    logoImg.height = "50";
+    a.appendChild(logoImg);
+    const companyNameSpan = document.createElement("span");
+    companyNameSpan.innerText = `${searchData[i].name}`;
+    a.appendChild(companyNameSpan);
+    const tickerSpan = document.createElement("span");
+    tickerSpan.innerText = `(${searchData[i].symbol})`;
+    a.appendChild(tickerSpan);
+    const pctSpan = document.createElement("span");
+
+    const pct = companyData.profile.changesPercentage;
+    let pctColor = pct > 0 ? "green" : "red";
+    let plus = pct > 0 ? "+" : "";
+    pctSpan.innerText = `(${plus}${parseFloat(pct).toFixed(2)}%)`;
+    pctSpan.style.color = pctColor;
+    a.appendChild(pctSpan);
+
     resultListDiv.appendChild(a);
   }
 }
