@@ -3,8 +3,8 @@ const companyName = document.querySelector("a");
 const stockPrice = document.querySelector(".price");
 const stockPercent = document.querySelector(".percent");
 const companyDescription = document.querySelector(".description");
-
 const sym = new URLSearchParams(window.location.search).get("symbol");
+const ctx = document.getElementById("myChart");
 
 async function getData(symbol) {
   const response = await fetch(
@@ -12,7 +12,7 @@ async function getData(symbol) {
   );
   const data = await response.json();
   showData(data);
-  getHistory(symbol)
+  getHistory(symbol);
 }
 
 getData(sym);
@@ -34,5 +34,33 @@ async function getHistory(symbol) {
     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`
   );
   const data = await response.json();
-  console.log(data);
+  const history = data.historical;
+  let dates = history.map((o) => o.date);
+  let prices = history.map((o) => o.close);
+  makeChart(dates, prices);
+}
+
+function makeChart(dates, closePrices) {
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: "Stock Price History",
+          data: closePrices,
+          fill: true,
+          backgroundColor: "#FF6384",
+          borderColor: "#FF6384",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
 }
