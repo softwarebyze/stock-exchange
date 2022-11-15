@@ -54,7 +54,7 @@ async function getHistory(symbol) {
   spinner.classList.add("d-none");
 }
 
-async function getData() {
+async function getTickerSearchData() {
   const symbol = new URLSearchParams(window.location.search).get("symbol");
   const response = await fetch(
     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
@@ -64,7 +64,7 @@ async function getData() {
   getHistory(symbol);
 }
 
-getData();
+getTickerSearchData();
 
 // class CompanyInfo {
 //   constructor(container, symbol) {

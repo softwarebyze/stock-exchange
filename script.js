@@ -3,7 +3,7 @@ const searchBtn = document.querySelector("button");
 const resultListDiv = document.querySelector(".list-group");
 const spinner = document.querySelector(".spinner-border");
 
-async function getData() {
+async function getTickerSearchData() {
   const searchQuery = searchInput.value;
   let searchParams = new URLSearchParams(window.location.search);
   searchParams.set("query", searchQuery);
@@ -33,7 +33,7 @@ function showData(data) {
 
 async function getAndShow() {
   spinner.classList.remove("d-none");
-  const data = await getData();
+  const data = await getTickerSearchData();
   spinner.classList.add("d-none");
   showData(data);
 }
