@@ -5,6 +5,7 @@ const stockPercent = document.querySelector(".percent");
 const companyDescription = document.querySelector(".description");
 const sym = new URLSearchParams(window.location.search).get("symbol");
 const ctx = document.getElementById("myChart");
+const spinner = document.querySelector(".spinner-border");
 
 async function getData(symbol) {
   const response = await fetch(
@@ -38,6 +39,7 @@ async function getHistory(symbol) {
   let dates = history.map((o) => o.date);
   let prices = history.map((o) => o.close);
   makeChart(dates, prices);
+  spinner.classList.add("d-none");
 }
 
 function makeChart(dates, closePrices) {
