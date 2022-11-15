@@ -5,6 +5,11 @@ const spinner = document.querySelector(".spinner-border");
 
 async function getData() {
   const searchQuery = searchInput.value;
+  let searchParams = new URLSearchParams(window.location.search);
+  searchParams.set("query", searchQuery);
+  let newRelativePathQuery =
+    window.location.pathname + "?" + searchParams.toString();
+  history.pushState(null, "", newRelativePathQuery);
   const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchQuery}&limit=10&exchange=NASDAQ`;
   try {
     const response = await fetch(url);
