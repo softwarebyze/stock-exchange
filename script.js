@@ -55,5 +55,5 @@ searchInput.addEventListener("input", debounce(getAndShow, 8));
 
 if (window.location.search) {
   searchInput.value = new URLSearchParams(window.location.search).get("query");
-  
+  getAndShow();
 }
