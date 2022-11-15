@@ -33,5 +33,17 @@ async function getAndShow() {
   showData(data);
 }
 
+const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
 searchBtn.addEventListener("click", getAndShow);
-searchInput.addEventListener('input', getAndShow);
+searchInput.addEventListener("input", debounce(getAndShow, 8));
