@@ -11,8 +11,8 @@ async function getData(symbol) {
     `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
   );
   const data = await response.json();
-  console.log(data);
   showData(data);
+  getHistory(symbol)
 }
 
 getData(sym);
@@ -24,8 +24,15 @@ function showData(data) {
   companyDescription.innerText = data.profile.description;
   stockPrice.innerText = `$${data.profile.price}`;
   const pct = data.profile.changesPercentage;
-  let pctColor = pct > 0 ? 'green' : 'red'
+  let pctColor = pct > 0 ? "green" : "red";
   stockPercent.innerText = `(${parseFloat(pct).toFixed(2)}%)`;
-  console.log(pctColor);
   stockPercent.style.color = pctColor;
+}
+
+async function getHistory(symbol) {
+  const response = await fetch(
+    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`
+  );
+  const data = await response.json();
+  console.log(data);
 }
