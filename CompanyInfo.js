@@ -15,7 +15,7 @@ function showData(data) {
   stockPercent.style.color = pctColor;
 }
 
-function makeChart(dates, closePrices) {
+function addChart(dates, closePrices) {
   const ctx = document.getElementById("myChart");
   new Chart(ctx, {
     type: "line",
@@ -50,7 +50,7 @@ async function getHistory(symbol) {
   const history = data.historical;
   let dates = history.map((o) => o.date);
   let prices = history.map((o) => o.close);
-  makeChart(dates, prices);
+  addChart(dates, prices);
   spinner.classList.add("d-none");
 }
 
