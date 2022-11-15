@@ -7,17 +7,6 @@ const sym = new URLSearchParams(window.location.search).get("symbol");
 const ctx = document.getElementById("myChart");
 const spinner = document.querySelector(".spinner-border");
 
-async function getData(symbol) {
-  const response = await fetch(
-    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
-  );
-  const data = await response.json();
-  showData(data);
-  getHistory(symbol);
-}
-
-getData(sym);
-
 function showData(data) {
   img.src = data.profile.image;
   companyName.innerText = data.profile.companyName;
@@ -28,18 +17,6 @@ function showData(data) {
   let pctColor = pct > 0 ? "green" : "red";
   stockPercent.innerText = `(${parseFloat(pct).toFixed(2)}%)`;
   stockPercent.style.color = pctColor;
-}
-
-async function getHistory(symbol) {
-  const response = await fetch(
-    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`
-  );
-  const data = await response.json();
-  const history = data.historical;
-  let dates = history.map((o) => o.date);
-  let prices = history.map((o) => o.close);
-  makeChart(dates, prices);
-  spinner.classList.add("d-none");
 }
 
 function makeChart(dates, closePrices) {
@@ -66,3 +43,26 @@ function makeChart(dates, closePrices) {
     },
   });
 }
+
+async function getHistory(symbol) {
+  const response = await fetch(
+    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/${symbol}?serietype=line`
+  );
+  const data = await response.json();
+  const history = data.historical;
+  let dates = history.map((o) => o.date);
+  let prices = history.map((o) => o.close);
+  makeChart(dates, prices);
+  spinner.classList.add("d-none");
+}
+
+async function getData(symbol) {
+  const response = await fetch(
+    `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${symbol}`
+  );
+  const data = await response.json();
+  showData(data);
+  getHistory(symbol);
+}
+
+getData(sym);
