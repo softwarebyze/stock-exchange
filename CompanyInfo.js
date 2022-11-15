@@ -22,4 +22,10 @@ function showData(data) {
   companyName.innerText = data.profile.companyName;
   companyName.href = data.profile.website;
   companyDescription.innerText = data.profile.description;
+  stockPrice.innerText = `$${data.profile.price}`;
+  const pct = data.profile.changesPercentage;
+  let pctColor = pct > 0 ? 'green' : 'red'
+  stockPercent.innerText = `(${parseFloat(pct).toFixed(2)}%)`;
+  console.log(pctColor);
+  stockPercent.style.color = pctColor;
 }
