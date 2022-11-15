@@ -1,6 +1,8 @@
 const img = document.querySelector("img");
 const companyName = document.querySelector("a");
-const companyDescription = document.querySelector("p");
+const stockPrice = document.querySelector(".price");
+const stockPercent = document.querySelector(".percent");
+const companyDescription = document.querySelector(".description");
 
 const sym = new URLSearchParams(window.location.search).get("symbol");
 
