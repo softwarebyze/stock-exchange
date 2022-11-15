@@ -20,22 +20,26 @@ async function getTickerSearchData() {
   }
 }
 
-function showData(data) {
+async function getCompanyData(symbol) {
+  
+}
+
+function showData(searchData) {
   resultListDiv.innerHTML = "";
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < searchData.length; i++) {
     const a = document.createElement("a");
     a.classList.add("list-group-item", "list-group-item-action");
-    a.innerText = `${data[i].name} (${data[i].symbol})`;
-    a.href = `./company.html?symbol=${data[i].symbol}`;
+    a.innerText = `${searchData[i].name} (${searchData[i].symbol})`;
+    a.href = `./company.html?symbol=${searchData[i].symbol}`;
     resultListDiv.appendChild(a);
   }
 }
 
 async function getAndShow() {
   spinner.classList.remove("d-none");
-  const data = await getTickerSearchData();
+  const tickerSearchData = await getTickerSearchData();
   spinner.classList.add("d-none");
-  showData(data);
+  showData(tickerSearchData);
 }
 
 const debounce = (func, wait) => {
