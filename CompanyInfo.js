@@ -11,7 +11,8 @@ function showData(data) {
   stockPrice.innerText = `$${data.profile.price}`;
   const pct = data.profile.changesPercentage;
   let pctColor = pct > 0 ? "green" : "red";
-  stockPercent.innerText = `(${parseFloat(pct).toFixed(2)}%)`;
+  let plus = pct > 0 ? "+" : "";
+  stockPercent.innerText = `(${plus}${parseFloat(pct).toFixed(2)}%)`;
   stockPercent.style.color = pctColor;
 }
 
