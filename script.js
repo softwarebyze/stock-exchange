@@ -3,7 +3,7 @@ const searchBtn = document.querySelector("button");
 const resultListDiv = document.querySelector(".list-group");
 const spinner = document.querySelector(".spinner-border");
 
-function setURLQuery(searchQuery) {
+function setQueryInURL(searchQuery) {
   let searchParams = new URLSearchParams(window.location.search);
   searchParams.set("query", searchQuery);
   let newRelativePathQuery = window.location.pathname + "?" + searchParams.toString();
@@ -12,7 +12,7 @@ function setURLQuery(searchQuery) {
 
 async function getTickerSearchData() {
   const searchQuery = searchInput.value;
-  setURLQuery(searchQuery);
+  setQueryInURL(searchQuery);
   const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchQuery}&limit=10&exchange=NASDAQ`;
   try {
     const response = await fetch(url);
