@@ -3,7 +3,7 @@ class Marquee {
     this.marquee = marquee;
   }
   async load() {
-    const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/?&exchange=%22NASDAQ%22`;
+    const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/quotes/nasdaq`;
     const response = await fetch(url);
     const data = await response.json();
     this.showMarquee(data);
