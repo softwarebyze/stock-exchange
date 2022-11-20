@@ -11,36 +11,34 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <link rel="icon" href="https://img.icons8.com/plasticine/512/stocks.png" type="image" sizes="16x16">
-    <script defer src="./script.js"></script>
+    <link
+      rel="icon"
+      href="https://img.icons8.com/plasticine/512/stocks.png"
+      type="image"
+      sizes="16x16"
+    />
+    <!-- <script defer src="./script.js"></script> -->
   </head>
   <body>
     <div id="marquee"></div>
     <div class="container mt-5 shadow-lg p-5 bg-white rounded">
       <h2 class="mb-4 text-center display-4">Search Nasdaq Stocks</h2>
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search for a Stock"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">
-            Search
-          </button>
-        </div>
-      </div>
+      <div id="form"></div>
       <div class="results">
         <div class="spinner-border d-none"></div>
         <div id="results" class="list-group list-group-flush"></div>
       </div>
     </div>
     <script src="./Marquee.js"></script>
+    <script src="./SearchResult.js"></script>
+    <script src="./SearchForm.js"></script>
     <script>
       (async function () {
         const marquee = new Marquee(document.getElementById("marquee"));
         marquee.load();
-      })()
+        const form = new SearchForm(document.getElementById("form"));
+        // console.log(form)
+      })();
     </script>
   </body>
 </html>
