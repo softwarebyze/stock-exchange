@@ -17,7 +17,6 @@
       type="image"
       sizes="16x16"
     />
-    <!-- <script defer src="./script.js"></script> -->
   </head>
   <body>
     <div id="marquee"></div>
@@ -37,7 +36,10 @@
         const marquee = new Marquee(document.getElementById("marquee"));
         marquee.load();
         const form = new SearchForm(document.getElementById("form"));
-        // console.log(form)
+        const results = new SearchResult(document.getElementById("results"));
+        form.onSearch((companies) => {
+          results.renderResults(companies);
+        })
       })();
     </script>
   </body>
