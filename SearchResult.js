@@ -1,6 +1,7 @@
 class SearchResult {
   constructor(results) {
     this.results = results;
+    this.searchInput = document.querySelector("input");
   }
 
   getDataForResults(companyProfilesArray) {
@@ -34,6 +35,7 @@ class SearchResult {
   }
 
   async renderResults(tickers) {
+    let searchQuery = this.searchInput.value;
     let containerElement = this.results;
     containerElement.innerHTML = "";
     try {
@@ -47,8 +49,11 @@ class SearchResult {
               resultData.ticker
             }" class="list-group-item list-group-item-action">
               <img src="${resultData.logoUrl}" height="50" width="50">
-              <span>${resultData.companyName}</span>
-              <span>(${resultData.ticker})</span>
+              <span>${this.markMatch(
+                searchQuery,
+                resultData.companyName
+              )}</span>
+              <span>(${this.markMatch(searchQuery, resultData.ticker)})</span>
               <span style="color: ${resultData.pctColor};">(${
           resultData.plus
         }${parseFloat(resultData.pctChange).toFixed(2)}%)</span>
@@ -58,5 +63,13 @@ class SearchResult {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  markMatch(query, text) {
+    let matchingText = text.replace(
+      new RegExp(query, "gi"),
+      (match) => `<mark>${match}</mark>`
+    );
+    return matchingText;
   }
 }
