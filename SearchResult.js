@@ -44,7 +44,9 @@ class SearchResult {
       const dataForResults = this.getDataForResults(companyProfiles);
       if (containerElement.innerHTML !== "") return;
       dataForResults.forEach((resultData) => {
-        containerElement.innerHTML += `
+        const resultDiv = document.createElement("div");
+        resultDiv.classList.add("d-flex", "flex-row");
+        resultDiv.innerHTML += `
             <a href="./company.html?symbol=${
               resultData.ticker
             }" class="list-group-item list-group-item-action">
@@ -57,8 +59,15 @@ class SearchResult {
               <span style="color: ${resultData.pctColor};">(${
           resultData.plus
         }${parseFloat(resultData.pctChange).toFixed(2)}%)</span>
-            </a>
+        </a>
             `;
+        const button = document.createElement("button");
+        button.innerText = "Compare";
+        button.addEventListener("click", (e) =>
+          console.log(e.target.parentElement, resultData)
+        );
+        resultDiv.appendChild(button);
+        containerElement.appendChild(resultDiv);
       });
     } catch (e) {
       console.error(e);
