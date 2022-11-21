@@ -11,24 +11,25 @@
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script defer src="./CompanyInfo.js"></script>
   </head>
   <body>
-    <div id="compInfo" class="container mt-5 shadow-lg p-5 bg-white rounded">
-      <div class="d-flex align-items-center">
-        <div><img alt="Company Logo" /></div>
-        <div><a class="ms-3"></a></div>
-      </div>
-      <p class="stock-price">
-        Stock Price: <span class="price"></span>
-        <span class="percent"></span>
-      </p>
-      <p class="description"></p>
-      <div>
-        <canvas id="myChart"></canvas>
-      </div>
-      <div class="spinner-border"></div>
-    </div>
+    <div
+      id="compInfo"
+      class="container mt-5 shadow-lg p-5 bg-white rounded"
+    ></div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./CompanyInfo.js"></script>
+    <script>
+      (async function () {
+        const params = new URLSearchParams(location.search);
+        const symbol = params.get("symbol");
+        const compInfo = new CompanyInfo(
+          document.getElementById("compInfo"),
+          symbol
+        );
+        await compInfo.load();
+        await compInfo.addChart();
+      })();
+    </script>
   </body>
 </html>
