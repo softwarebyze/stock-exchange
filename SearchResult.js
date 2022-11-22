@@ -2,6 +2,16 @@ class SearchResult {
   constructor(results) {
     this.results = results;
     this.searchInput = document.querySelector("input");
+    this.create();
+  }
+
+  create() {
+    this.spinner = document.createElement("div");
+    this.spinner.classList.add("spinner-border", "d-none");
+    this.results.appendChild(this.spinner);
+    const results = document.createElement("div");
+    results.classList.add("list-group", "list-group-flush");
+    this.results.appendChild(results);
   }
 
   async getCompaniesData(tickersArr) {
