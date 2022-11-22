@@ -34,37 +34,109 @@ class SearchResult {
     }
   }
 
+  createResultDiv() {
+    const resultDiv = document.createElement("div");
+    resultDiv.classList.add("d-flex", "flex-row");
+    resultDiv.id = "result";
+    return resultDiv;
+  }
+
+  createResultA(ticker) {
+    const resultA = document.createElement("a");
+    resultA.href = `./company.html?symbol=${ticker}`;
+    resultA.classList.add("list-group-item", "list-group-item-action");
+    return resultA;
+  }
+
+  createResultImg(imgUrl) {
+    const resultImg = document.createElement("img");
+    resultImg.src = imgUrl;
+    resultImg.width = "50";
+    resultImg.height = "50";
+    return resultImg;
+  }
+
+  createResultNameSpan(searchQuery, companyName) {
+    const resultNameSpan = document.createElement("span");
+    resultNameSpan.innerHTML = `${this.markMatch(searchQuery, companyName)}`;
+    return resultNameSpan;
+  }
+
+  createResultTickerSpan(searchQuery, ticker) {
+    const resultTickerSpan = document.createElement("span");
+    resultTickerSpan.innerHTML = `(${this.markMatch(searchQuery, ticker)})`;
+    return resultTickerSpan;
+  }
+
+  createResultPctChangeSpan(pctChange) {
+    const plus = pctChange > 0 ? "+" : "";
+    const pctColor =
+      pctChange > 0 ? "green" : pctChange == 0 ? "chocolate" : "red";
+    const resultPctChangeSpan = document.createElement("span");
+    resultPctChangeSpan.innerHTML = `(${plus}${parseFloat(pctChange).toFixed(
+      2
+    )}%)`;
+    resultPctChangeSpan.style.color = pctColor;
+    return resultPctChangeSpan;
+  }
+
   async renderResults(tickers) {
-    let searchQuery = this.searchInput.value;
+    const searchQuery = this.searchInput.value;
     let containerElement = this.results;
     containerElement.innerHTML = "";
     try {
       const companyProfiles = await this.getCompaniesData(tickers);
+      // console.log(companyProfiles);
       if (!companyProfiles) return;
-      const dataForResults = this.getDataForResults(companyProfiles);
-      if (containerElement.innerHTML !== "") return;
-      dataForResults.forEach((resultData) => {
-        const resultDiv = document.createElement("div");
-        resultDiv.classList.add("d-flex", "flex-row");
-        resultDiv.innerHTML += `
-            <a href="./company.html?symbol=${
-              resultData.ticker
-            }" class="list-group-item list-group-item-action">
-              <img src="${resultData.logoUrl}" height="50" width="50">
-              <span>${this.markMatch(
-                searchQuery,
-                resultData.companyName
-              )}</span>
-              <span>(${this.markMatch(searchQuery, resultData.ticker)})</span>
-              <span style="color: ${resultData.pctColor};">(${
-          resultData.plus
-        }${parseFloat(resultData.pctChange).toFixed(2)}%)</span>
-        </a>
-            `;
+      // const dataForResults = this.getDataForResults(companyProfiles);
+      // if (containerElement.innerHTML !== "") return;
+      // dataForResults.forEach((resultData) => {
+      companyProfiles.forEach((companyProfile) => {
+        const { symbol: ticker } = companyProfile;
+        const {
+          image: logoUrl,
+          companyName,
+          changesPercentage: pctChange,
+        } = companyProfile.profile;
+        // const resultDiv = document.createElement("div");
+        // resultDiv.classList.add("d-flex", "flex-row");
+        const resultDiv = this.createResultDiv();
+        const resultA = this.createResultA(ticker);
+        const resultImg = this.createResultImg(logoUrl);
+        const resultNameSpan = this.createResultNameSpan(
+          searchQuery,
+          companyName
+        );
+        const resultTickerSpan = this.createResultTickerSpan(
+          searchQuery,
+          ticker
+        );
+        const resultPctChangeSpan = this.createResultPctChangeSpan(pctChange);
+        resultA.append(
+          resultImg,
+          resultNameSpan,
+          resultTickerSpan,
+          resultPctChangeSpan
+        );
+        resultDiv.appendChild(resultA);
+        // resultDiv.innerHTML += `
+        //     <a href="./company.html?symbol=${resultData.ticker}"
+        //     class="list-group-item list-group-item-action">
+        //       <img src="${resultData.logoUrl}" height="50" width="50">
+        //       <span>${this.markMatch(
+        //         searchQuery,
+        //         resultData.companyName
+        //       )}</span>
+        //       <span>(${this.markMatch(searchQuery, resultData.ticker)})</span>
+        //       <span style="color: ${resultData.pctColor};">(${
+        //   resultData.plus
+        // }${parseFloat(resultData.pctChange).toFixed(2)}%)</span>
+        // </a>
+        //     `;
         const button = document.createElement("button");
         button.innerText = "Compare";
         button.addEventListener("click", (e) =>
-          console.log(e.target.parentElement, resultData)
+          console.log(e.target.parentElement, companyProfile)
         );
         resultDiv.appendChild(button);
         containerElement.appendChild(resultDiv);
@@ -75,6 +147,7 @@ class SearchResult {
   }
 
   markMatch(query, text) {
+    if (!query) return text;
     let matchingText = text.replace(
       new RegExp(query, "gi"),
       (match) => `<mark>${match}</mark>`
