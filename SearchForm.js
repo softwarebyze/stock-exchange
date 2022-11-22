@@ -30,16 +30,32 @@ class SearchForm {
     this.spinner = document.querySelector(".spinner-border");
   }
 
+  // async setQueryInURL(searchQuery) {
+  //   let searchParams = new URLSearchParams(window.location.search);
+  //   searchParams.set("query", searchQuery);
+  //   let newRelativePathQuery =
+  //     window.location.pathname + "?" + searchParams.toString();
+  //   history.pushState(null, "", newRelativePathQuery);
+  // }
+
   async setQueryInURL(searchQuery) {
     let searchParams = new URLSearchParams(window.location.search);
-    searchParams.set("query", searchQuery);
+    let q;
+    if (searchQuery) {
+      searchParams.set("query", searchQuery);
+      q = "?";
+    } else {
+      searchParams.delete("query");
+      q = "";
+    }
     let newRelativePathQuery =
-      window.location.pathname + "?" + searchParams.toString();
+      window.location.pathname + q + searchParams.toString();
     history.pushState(null, "", newRelativePathQuery);
   }
 
   async getTickers(searchQuery) {
     this.setQueryInURL(searchQuery);
+    if (!searchQuery) return [];
     const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchQuery}&limit=10&exchange=NASDAQ`;
     try {
       const response = await fetch(url);
@@ -53,11 +69,9 @@ class SearchForm {
 
   async search() {
     let inputQuery = this.searchInput.value;
-    // if (!inputQuery) return;
     this.spinner.classList.remove("d-none");
     try {
       const tickers = await this.getTickers(inputQuery);
-      if (!tickers) return;
       this.spinner.classList.add("d-none");
       this.render(tickers);
     } catch (e) {
