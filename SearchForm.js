@@ -51,27 +51,15 @@ class SearchForm {
     }
   }
 
-  debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
-
   async search() {
     let inputQuery = this.searchInput.value;
-    if (!inputQuery) return;
+    // if (!inputQuery) return;
     this.spinner.classList.remove("d-none");
     try {
       const tickers = await this.getTickers(inputQuery);
       if (!tickers) return;
       this.spinner.classList.add("d-none");
-      this.debounce(this.render(tickers), 80);
+      this.render(tickers);
     } catch (e) {
       console.error(e);
     }
@@ -86,8 +74,17 @@ class SearchForm {
     }
   }
 
+  // debounce(cb, delay) {
+  //   let timeout;
+  //   return (...args) => {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(() => cb(...args), delay);
+  //   };
+  // }
+
   addEventListeners() {
     this.searchBtn.addEventListener("click", () => this.search());
     this.searchInput.addEventListener("input", () => this.search());
+    // this.searchInput.addEventListener("input",this.debounce(this.search, 200));
   }
 }
