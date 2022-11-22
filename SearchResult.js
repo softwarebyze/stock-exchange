@@ -9,12 +9,13 @@ class SearchResult {
     this.spinner = document.createElement("div");
     this.spinner.classList.add("spinner-border", "d-none");
     this.results.appendChild(this.spinner);
-    const results = document.createElement("div");
-    results.classList.add("list-group", "list-group-flush");
-    this.results.appendChild(results);
+    this.resultsList = document.createElement("div");
+    this.resultsList.classList.add("list-group", "list-group-flush");
+    this.results.appendChild(this.resultsList);
   }
 
   async getCompaniesData(tickersArr) {
+    if (tickersArr.length === 0) return [];
     if (tickersArr.length === 1) tickersArr.push(",");
     const companiesQuery = tickersArr.join();
     const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/${companiesQuery}`;
@@ -75,13 +76,14 @@ class SearchResult {
   }
 
   async renderResults(tickers) {
+    this.spinner.classList.remove("d-none");
     const searchQuery = this.searchInput.value;
-    let containerElement = this.results;
+    let containerElement = this.resultsList;
     containerElement.innerHTML = "";
     try {
       const companyProfiles = await this.getCompaniesData(tickers);
       if (!companyProfiles) return;
-      // if (containerElement.innerHTML !== "") return;
+      // if (containerElement.innerHTML !== "") ;
       companyProfiles.forEach((companyProfile) => {
         const { symbol: ticker } = companyProfile;
         const {
@@ -116,6 +118,7 @@ class SearchResult {
         resultDiv.appendChild(button);
         containerElement.appendChild(resultDiv);
       });
+      this.spinner.classList.add("d-none");
     } catch (e) {
       console.error(e);
     }

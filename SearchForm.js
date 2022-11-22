@@ -27,16 +27,7 @@ class SearchForm {
     this.searchInput = document.querySelector("input");
     this.searchBtn = document.querySelector("button");
     this.resultListDiv = document.getElementById("results");
-    this.spinner = document.querySelector(".spinner-border");
   }
-
-  // async setQueryInURL(searchQuery) {
-  //   let searchParams = new URLSearchParams(window.location.search);
-  //   searchParams.set("query", searchQuery);
-  //   let newRelativePathQuery =
-  //     window.location.pathname + "?" + searchParams.toString();
-  //   history.pushState(null, "", newRelativePathQuery);
-  // }
 
   async setQueryInURL(searchQuery) {
     let searchParams = new URLSearchParams(window.location.search);
@@ -69,10 +60,8 @@ class SearchForm {
 
   async search() {
     let inputQuery = this.searchInput.value;
-    this.spinner.classList.remove("d-none");
     try {
       const tickers = await this.getTickers(inputQuery);
-      this.spinner.classList.add("d-none");
       this.render(tickers);
     } catch (e) {
       console.error(e);
@@ -94,6 +83,15 @@ class SearchForm {
   //     clearTimeout(timeout);
   //     timeout = setTimeout(() => cb(...args), delay);
   //   };
+  // }
+
+  // debounce(func, wait) {
+  //   let timeout
+  //   return function(...args) {
+  //     const context = this
+  //     clearTimeout(timeout)
+  //     timeout = setTimeout(() => func.apply(context, args), wait)
+  //   }
   // }
 
   addEventListeners() {
