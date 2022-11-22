@@ -41,11 +41,10 @@ class SearchForm {
   async getTickers(searchQuery) {
     this.setQueryInURL(searchQuery);
     const url = `https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/search?query=${searchQuery}&limit=10&exchange=NASDAQ`;
-    let tickers = [];
     try {
       const response = await fetch(url);
       const tickerSearchData = await response.json();
-      tickerSearchData.forEach((result) => tickers.push(result.symbol));
+      const tickers = tickerSearchData.map((result) => result.symbol);
       return tickers;
     } catch (err) {
       console.error(err);
