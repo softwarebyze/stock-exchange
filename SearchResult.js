@@ -4,22 +4,6 @@ class SearchResult {
     this.searchInput = document.querySelector("input");
   }
 
-  getDataForResults(companyProfilesArray) {
-    let resultsData = [];
-    companyProfilesArray.forEach((companyProfile) =>
-      resultsData.push({
-        ticker: companyProfile.symbol,
-        logoUrl: companyProfile.profile.image,
-        companyName: companyProfile.profile.companyName,
-        pctChange: companyProfile.profile.changesPercentage,
-        pctColor:
-          companyProfile.profile.changesPercentage > 0 ? "green" : "red",
-        plus: companyProfile.profile.changesPercentage > 0 ? "+" : "",
-      })
-    );
-    return resultsData;
-  }
-
   async getCompaniesData(tickersArr) {
     if (tickersArr.length === 1) tickersArr.push(",");
     const companiesQuery = tickersArr.join();
@@ -86,11 +70,8 @@ class SearchResult {
     containerElement.innerHTML = "";
     try {
       const companyProfiles = await this.getCompaniesData(tickers);
-      // console.log(companyProfiles);
       if (!companyProfiles) return;
-      // const dataForResults = this.getDataForResults(companyProfiles);
       // if (containerElement.innerHTML !== "") return;
-      // dataForResults.forEach((resultData) => {
       companyProfiles.forEach((companyProfile) => {
         const { symbol: ticker } = companyProfile;
         const {
@@ -98,8 +79,6 @@ class SearchResult {
           companyName,
           changesPercentage: pctChange,
         } = companyProfile.profile;
-        // const resultDiv = document.createElement("div");
-        // resultDiv.classList.add("d-flex", "flex-row");
         const resultDiv = this.createResultDiv();
         const resultA = this.createResultA(ticker);
         const resultImg = this.createResultImg(logoUrl);
@@ -119,20 +98,6 @@ class SearchResult {
           resultPctChangeSpan
         );
         resultDiv.appendChild(resultA);
-        // resultDiv.innerHTML += `
-        //     <a href="./company.html?symbol=${resultData.ticker}"
-        //     class="list-group-item list-group-item-action">
-        //       <img src="${resultData.logoUrl}" height="50" width="50">
-        //       <span>${this.markMatch(
-        //         searchQuery,
-        //         resultData.companyName
-        //       )}</span>
-        //       <span>(${this.markMatch(searchQuery, resultData.ticker)})</span>
-        //       <span style="color: ${resultData.pctColor};">(${
-        //   resultData.plus
-        // }${parseFloat(resultData.pctChange).toFixed(2)}%)</span>
-        // </a>
-        //     `;
         const button = document.createElement("button");
         button.innerText = "Compare";
         button.addEventListener("click", (e) =>
