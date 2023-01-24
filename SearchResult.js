@@ -22,7 +22,7 @@ class SearchResult {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      const companiesData = await data.companyProfiles;
+      const companiesData = data.companyProfiles;
       return companiesData;
     } catch (e) {
       console.error(e);
@@ -75,53 +75,47 @@ class SearchResult {
     return resultPctChangeSpan;
   }
 
-  async renderResults(tickers) {
+  renderResults(tickers) {
     this.spinner.classList.remove("d-none");
     const searchQuery = this.searchInput.value;
-    let containerElement = this.resultsList;
+    const containerElement = this.resultsList;
     containerElement.innerHTML = "";
-    try {
-      const companyProfiles = await this.getCompaniesData(tickers);
-      if (!companyProfiles) return;
-      // if (containerElement.innerHTML !== "") ;
-      companyProfiles.forEach((companyProfile) => {
-        const { symbol: ticker } = companyProfile;
-        const {
-          image: logoUrl,
-          companyName,
-          changesPercentage: pctChange,
-        } = companyProfile.profile;
-        const resultDiv = this.createResultDiv();
-        const resultA = this.createResultA(ticker);
-        const resultImg = this.createResultImg(logoUrl);
-        const resultNameSpan = this.createResultNameSpan(
-          searchQuery,
-          companyName
-        );
-        const resultTickerSpan = this.createResultTickerSpan(
-          searchQuery,
-          ticker
-        );
-        const resultPctChangeSpan = this.createResultPctChangeSpan(pctChange);
-        resultA.append(
-          resultImg,
-          resultNameSpan,
-          resultTickerSpan,
-          resultPctChangeSpan
-        );
-        resultDiv.appendChild(resultA);
-        const button = document.createElement("button");
-        button.innerText = "Compare";
-        button.addEventListener("click", (e) =>
-          console.log(e.target.parentElement, companyProfile)
-        );
-        resultDiv.appendChild(button);
-        containerElement.appendChild(resultDiv);
+    this.getCompaniesData(tickers)
+      .then((companyProfiles) => {
+        if (!companyProfiles) return;
+        companyProfiles.forEach((companyProfile) => {
+          const { symbol: ticker } = companyProfile;
+          const {
+            image: logoUrl,
+            companyName,
+            changesPercentage: pctChange,
+          } = companyProfile.profile;
+          const resultDiv = this.createResultDiv();
+          const resultA = this.createResultA(ticker);
+          const resultImg = this.createResultImg(logoUrl);
+          const resultNameSpan = this.createResultNameSpan(
+            searchQuery,
+            companyName
+          );
+          const resultTickerSpan = this.createResultTickerSpan(
+            searchQuery,
+            ticker
+          );
+          const resultPctChangeSpan = this.createResultPctChangeSpan(pctChange);
+          resultA.append(
+            resultImg,
+            resultNameSpan,
+            resultTickerSpan,
+            resultPctChangeSpan
+          );
+          resultDiv.appendChild(resultA);
+          containerElement.appendChild(resultDiv);
+        });
+        this.spinner.classList.add("d-none");
+      })
+      .catch((e) => {
+        console.error(e);
       });
-      this.spinner.classList.add("d-none");
-    } catch (e) {
-      console.error(e);
-    }
   }
 
   markMatch(query, text) {
