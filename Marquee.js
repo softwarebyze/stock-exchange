@@ -14,16 +14,15 @@ class Marquee {
     this.marquee.style.overflow = "hidden";
     this.marquee.innerHTML = `<div id="marquee-stocks" style="white-space: nowrap;"></div>`;
     this.marqueeStocksDiv = document.getElementById("marquee-stocks");
-    dataArray.forEach((data, i) => {
-      if (i > 100) return;
-      if (data.change === null) return;
-      const color = data.change > 0 ? "text-success" : "text-danger";
+    for (let i = 0; i < 100; i++) {
+      if (dataArray[i].change === null) return;
+      const color = dataArray[i].change > 0 ? "text-success" : "text-danger";
       this.marqueeStocksDiv.innerHTML += `<span class="px-2">${
-        data.symbol
+        dataArray[i].symbol
       } <span class="${color} ps-1">$${Math.abs(
-        data.change.toFixed(2)
+        dataArray[i].change.toFixed(2)
       )} </span></span>`;
-    });
+    }
   }
 
   animateMarquee() {
