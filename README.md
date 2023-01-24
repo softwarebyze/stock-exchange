@@ -8,10 +8,10 @@ This project is a web application that allows users to search for stocks listed 
 
 ## Technologies Used
 
-HTML, CSS, and JavaScript
-Bootstrap for styling and layout
-[Financial Modeling Prep API](https://site.financialmodelingprep.com/developer/docs/) for retrieving NASDAQ stock data
-ChartJS for stock price history graphs
+HTML, CSS, and JavaScript  
+Bootstrap for styling and layout  
+[Financial Modeling Prep API](https://site.financialmodelingprep.com/developer/docs/) for retrieving NASDAQ stock data  
+ChartJS for stock price history graphs  
 
 ## Features
 
