@@ -79,11 +79,11 @@ class CompanyInfo {
   }
 
   async addChart() {
-    const data = await this.getHistory(this.symbol)
-    data.reverse()
+    const data = await this.getHistory(this.symbol);
+    data.reverse();
     const dates = data.map((o) => o.date);
     const closePrices = data.map((o) => o.close);
-    new Chart(this.ctx, {
+    const chart = new Chart(this.ctx, {
       type: "line",
       data: {
         labels: dates,
