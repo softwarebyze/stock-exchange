@@ -30,7 +30,7 @@ class SearchForm {
   }
 
   async setQueryInURL(searchQuery) {
-    let searchParams = new URLSearchParams(window.location.search);
+    const searchParams = new URLSearchParams(window.location.search);
     let q;
     if (searchQuery) {
       searchParams.set("query", searchQuery);
@@ -39,7 +39,7 @@ class SearchForm {
       searchParams.delete("query");
       q = "";
     }
-    let newRelativePathQuery =
+    const newRelativePathQuery =
       window.location.pathname + q + searchParams.toString();
     history.pushState(null, "", newRelativePathQuery);
   }
@@ -59,7 +59,7 @@ class SearchForm {
   }
 
   async search() {
-    let inputQuery = this.searchInput.value;
+    const inputQuery = this.searchInput.value;
     try {
       const tickers = await this.getTickers(inputQuery);
       this.render(tickers);
@@ -77,26 +77,8 @@ class SearchForm {
     }
   }
 
-  // debounce(cb, delay) {
-  //   let timeout;
-  //   return (...args) => {
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(() => cb(...args), delay);
-  //   };
-  // }
-
-  // debounce(func, wait) {
-  //   let timeout
-  //   return function(...args) {
-  //     const context = this
-  //     clearTimeout(timeout)
-  //     timeout = setTimeout(() => func.apply(context, args), wait)
-  //   }
-  // }
-
   addEventListeners() {
     this.searchBtn.addEventListener("click", () => this.search());
     this.searchInput.addEventListener("input", () => this.search());
-    // this.searchInput.addEventListener("input",this.debounce(this.search, 200));
   }
 }

@@ -126,7 +126,7 @@ class SearchResult {
 
   markMatch(query, text) {
     if (!query) return text;
-    let matchingText = text.replace(
+    const matchingText = text.replace(
       new RegExp(query, "gi"),
       (match) => `<mark>${match}</mark>`
     );

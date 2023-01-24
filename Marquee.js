@@ -17,7 +17,7 @@ class Marquee {
     dataArray.forEach((data, i) => {
       if (i > 100) return;
       if (data.change === null) return;
-      let color = data.change > 0 ? "text-success" : "text-danger";
+      const color = data.change > 0 ? "text-success" : "text-danger";
       this.marqueeStocksDiv.innerHTML += `<span class="px-2">${
         data.symbol
       } <span class="${color} ps-1">$${Math.abs(
@@ -27,11 +27,11 @@ class Marquee {
   }
 
   animateMarquee() {
-    let _keyframes = [
+    const _keyframes = [
       { transform: "translateX(0%)" },
       { transform: "translateX(-100%)" },
     ];
-    let _timing_options = {
+    const _timing_options = {
       duration: 80000,
       iterations: Infinity,
       easing: "linear",
