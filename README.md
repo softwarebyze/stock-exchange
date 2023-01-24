@@ -15,18 +15,18 @@ ChartJS for stock price history graphs
 
 ## Features
 
-Scrolling stock ticker at the top of the page
-Search form for searching Nasdaq stocks by symbol or company name
-Display of search results including stock symbol, company name, and current price
-Company info page showing description and price history
+Scrolling stock ticker at the top of the page  
+Search form for searching Nasdaq stocks by symbol or company name  
+Display of search results including stock symbol, company name, and current price  
+Company info page showing description and price history  
 
 ## Getting Started
 
 To run the project locally:
 
-Clone the repository to your local machine
-Open the index.html file in your preferred browser
-Search for stocks using the form on the page
+Clone the repository to your local machine  
+Open the index.html file in your preferred browser  
+Search for stocks using the form on the page  
 
 ## Contributions
 
