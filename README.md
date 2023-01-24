@@ -2,6 +2,8 @@
 
 This project is a web application that allows users to search for stocks listed on the Nasdaq stock exchange. The app features a scrolling stock ticker at the top of the page, a search form for users to input a stock symbol or company name, and a company page with a chart showing the stock's price history. The app makes use of the Financial Modeling Prep API to retrieve stock data.
 
+It is deployed to [https://stock-exchange-softwarebyze.netlify.app/](https://stock-exchange-softwarebyze.netlify.app/)
+
 ## Screenshot
 
 ![Screenshot](/StockExchangeJS.png)
@@ -12,6 +14,7 @@ HTML, CSS, and JavaScript
 Bootstrap for styling and layout  
 [Financial Modeling Prep API](https://site.financialmodelingprep.com/developer/docs/) for retrieving NASDAQ stock data  
 ChartJS for stock price history graphs  
+Netlify for deployment
 
 ## Features
 
